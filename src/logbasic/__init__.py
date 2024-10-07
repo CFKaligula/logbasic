@@ -62,7 +62,7 @@ def info_string(*args: list) -> None:
 
 
 def debug_string(*args: list) -> None:
-    debugging = os.environ[LOG_DEBUGGING_ENV_VAR] or DEBUGGING
+    debugging = bool(os.environ.get(LOG_DEBUGGING_ENV_VAR, 'false')) or DEBUGGING
     if debugging:
         format(ColorCode.grey, LogTypeText.debug, *args)
 
@@ -106,7 +106,7 @@ def convert_args_to_str(*args: list) -> str:
     for i in range(0, len(args)):
         arg = args[i]
 
-        str_arg: str = format_on_class(arg)
+        str_arg: str = format_on_type(arg)
 
         if i == 0:
             result = result + str_arg
@@ -115,7 +115,7 @@ def convert_args_to_str(*args: list) -> str:
     return result
 
 
-def format_on_class(arg: Any) -> str:
+def format_on_type(arg: Any) -> str:
     if isinstance(arg, dict):
         result = format_dict(arg)
     if isinstance(arg, dt.datetime):
