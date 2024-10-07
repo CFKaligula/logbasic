@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "logeasy"
+name = "logbasic"
 version = "0.0.0"
 dependencies = [
 
@@ -20,5 +20,5 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/casper-voltgoed/logeasy"
-Issues = "https://github.com/casper-voltgoed/logeasy/issues"
+Homepage = "https://github.com/casper-voltgoed/logbasic"
+Issues = "https://github.com/casper-voltgoed/logbasic/issues"

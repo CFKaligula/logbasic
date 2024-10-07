@@ -1,3 +1,17 @@
+Metadata-Version: 2.1
+Name: logbasic
+Version: 0.0.0
+Summary: A simple package for logging.
+Author-email: Casper Kole <casper@voltgoed.nl>
+Project-URL: Homepage, https://github.com/casper-voltgoed/logbasic
+Project-URL: Issues, https://github.com/casper-voltgoed/logbasic/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # Logbasic
 
 This package contains some simple helper functions for logging. There are 6 log levels:
