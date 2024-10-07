@@ -118,9 +118,9 @@ def convert_args_to_str(*args: list) -> str:
 def format_on_type(arg: Any) -> str:
     if isinstance(arg, dict):
         result = format_dict(arg)
-    if isinstance(arg, dt.datetime):
+    elif isinstance(arg, dt.datetime):
         result = format_datetime(arg)
-    if isinstance(arg, dt.timedelta):
+    elif isinstance(arg, dt.timedelta):
         result = format_timedelta(arg)
     else:
         result = str(arg)
