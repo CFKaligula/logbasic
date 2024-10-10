@@ -86,15 +86,16 @@ def format(color: ColorCode, log_type_text: LogTypeText, *args: list):
     args_string = convert_args_to_str(*args)
     # time = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]  # only want milliseconds so remove 3 last nums form nanoseconds
     time = format_datetime(dt.datetime.now())
-    added_space = ' ' * (log_type_text.n_max_chars - log_type_text.n_chars)
 
-    function = inspect.stack()[2][3]
-    file = inspect.stack()[2][1].rsplit('\\', 1)[-1]
+    og_function_stack = inspect.stack()[3]
+    function = og_function_stack[3]
+    function = f'\\{function}()' if function != '<module>' else ''
+    file = og_function_stack[1].rsplit('\\', 1)[-1]
 
     time_part = ColorCode.grey.add_to(time)
-    file_function_part = ColorCode.grey.add_to(f'{file}\\{function}():')
-
     log_type_part = color.add_to(f'[{log_type_text.value}]')
+    added_space = ' ' * (log_type_text.n_max_chars - log_type_text.n_chars)
+    file_function_part = ColorCode.grey.add_to(f'{file}{function}:')
 
     formatted_string = f'{time_part} {log_type_part} {added_space}{file_function_part}{color.add_to(args_string)}'
 
