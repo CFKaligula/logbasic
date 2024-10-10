@@ -19,7 +19,7 @@ LOG_DEBUGGING_ENV_VAR: Final = 'log_debugging'
 
 
 def debug(*args: list) -> None:
-    debugging = bool(os.environ.get(LOG_DEBUGGING_ENV_VAR, 'false')) or DEBUGGING
+    debugging = bool(os.environ.get(LOG_DEBUGGING_ENV_VAR, '')) or DEBUGGING
     if debugging:
         format_and_print(ColorCode.grey, LogTypeText.debug, *args)
 
