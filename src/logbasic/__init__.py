@@ -96,7 +96,8 @@ def format(color: ColorCode, log_type_text: LogTypeText, *args: list):
     og_function_stack = inspect.stack()[3]
     function = og_function_stack[3]
     function = f'\\{function}()' if function != '<module>' else ''
-    file = og_function_stack[1].rsplit('\\', 1)[-1]
+    # \ for windows, / for linux
+    file = og_function_stack[1].rsplit('\\', 1)[-1].rsplit('/', 1)[-1]
 
     time_part = ColorCode.grey.add_to(time)
     log_type_part = color.add_to(f'[{log_type_text.value}]')
