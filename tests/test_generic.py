@@ -24,3 +24,7 @@ def test_format_timedelta2():
 
 def test_format_timedelta3():
     assert logbasic.format_timedelta(dt.timedelta(0)) == '0D0H0M0S'
+
+
+def test_format_dict1():
+    assert logbasic.format_dict({'halolo': dt.datetime(2024, 1, 1)}) == "{'halolo': datetime.datetime(2024, 1, 1, 0, 0)}"

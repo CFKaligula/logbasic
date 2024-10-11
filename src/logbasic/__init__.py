@@ -1,14 +1,11 @@
 import datetime as dt
 import inspect
 import json
-
-
 import os
-from typing import Any, Dict, Final
+from typing import Any, Final
 
 from .color_code import ColorCode
 from .log_type_text import LogTypeText
-
 
 DEBUGGING = False  # set either via this variable or via env var 'log_debugging'
 LOG_DEBUGGING_ENV_VAR: Final = 'log_debugging'
@@ -138,8 +135,12 @@ def format_on_type(arg: Any) -> str:
     return result
 
 
-def format_dict(dict: Dict) -> str:
-    return json.dumps(dict, sort_keys=True, indent=4)
+def format_dict(input_dict: dict) -> str:
+    try:
+        result = json.dumps(input_dict, sort_keys=True, indent=4)
+    except Exception:
+        result = str(input_dict)
+    return result
 
 
 def format_timedelta(timedelta: dt.timedelta) -> str:
