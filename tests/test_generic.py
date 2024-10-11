@@ -10,6 +10,10 @@ def test_format_datetime():
     assert logbasic.format_datetime(dt.datetime(2024, 1, 1, 1, 1, 1, 1)) == 'Mon, 01 Jan 2024, 01:01:01.00'
 
 
+def test_format_datetime_utc():
+    assert logbasic.format_datetime(dt.datetime(2024, 1, 1, 1, 1, 1, 1, tzinfo=dt.timezone.utc)) == 'Mon, 01 Jan 2024, 01:01:01.00+UTC'
+
+
 def test_format_datetime2():
     assert logbasic.format_datetime(dt.datetime(2024, 12, 31, 23, 59, 59, 999999)) == 'Tue, 31 Dec 2024, 23:59:59.99'
 

@@ -189,9 +189,8 @@ def format_datetime(datetime: dt.datetime) -> str:
         tz = ''
     else:
         utcoffset: dt.timedelta = datetime.tzinfo.utcoffset(datetime)  # type:ignore
-        print(utcoffset)
         prefix = '+' if utcoffset.total_seconds() > 0 else '-'
-        tz = f'{prefix}{format_timedelta(utcoffset)}'  # type:ignore
+        tz = f'{prefix}{format_timedelta(utcoffset)}' if utcoffset.total_seconds() > 0 else '+UTC'  # type:ignore
 
     timetuple = datetime.timetuple()
 
