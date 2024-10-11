@@ -13,15 +13,23 @@ from .log_type_text import LogTypeText
 DEBUGGING = False  # set either via this variable or via env var 'log_debugging'
 LOG_DEBUGGING_ENV_VAR: Final = 'log_debugging'
 
+
+def in_debugging() -> bool:
+    return bool(os.environ.get(LOG_DEBUGGING_ENV_VAR, '')) or DEBUGGING
+
+
 ####################
 # COMMON FUNCTIONS #
 ####################
 
 
 def debug(*args: list) -> None:
-    debugging = bool(os.environ.get(LOG_DEBUGGING_ENV_VAR, '')) or DEBUGGING
-    if debugging:
+    if in_debugging():
         format_and_print(ColorCode.grey, LogTypeText.debug, *args)
+
+
+def info(*args: list) -> None:
+    format_and_print(ColorCode.reset, LogTypeText.info, *args)
 
 
 def warning(*args: list) -> None:
@@ -32,21 +40,32 @@ def error(*args: list) -> None:
     format_and_print(ColorCode.bold_red, LogTypeText.error, *args)
 
 
-def info(*args: list) -> None:
-    format_and_print(ColorCode.reset, LogTypeText.info, *args)
+def success(*args: list) -> None:
+    """
+    When some process has succesfully finished. E.g. "Finished uploading to the database!"
+    """
+    format_and_print(ColorCode.green, LogTypeText.success, *args)
 
 
 def special(*args: list) -> None:
+    """
+    When you want to be able to see this line of code especially well. Useful for debugging when there are already lots of print statements.
+    """
     format_and_print(ColorCode.purple_marked, LogTypeText.special, *args)
-
-
-def success(*args: list) -> None:
-    format_and_print(ColorCode.green, LogTypeText.success, *args)
 
 
 #####################################
 # FUNCTIONS TO GET FORMATTED STRING #
 #####################################
+
+
+def debug_string(*args: list) -> None:
+    if in_debugging():
+        format(ColorCode.grey, LogTypeText.debug, *args)
+
+
+def info_string(*args: list) -> None:
+    format(ColorCode.reset, LogTypeText.info, *args)
 
 
 def warning_string(*args: list) -> None:
@@ -55,16 +74,6 @@ def warning_string(*args: list) -> None:
 
 def error_string(*args: list) -> None:
     format(ColorCode.bold_red, LogTypeText.error, *args)
-
-
-def info_string(*args: list) -> None:
-    format(ColorCode.reset, LogTypeText.info, *args)
-
-
-def debug_string(*args: list) -> None:
-    debugging = bool(os.environ.get(LOG_DEBUGGING_ENV_VAR, 'false')) or DEBUGGING
-    if debugging:
-        format(ColorCode.grey, LogTypeText.debug, *args)
 
 
 def special_string(*args: list) -> None:
@@ -139,12 +148,42 @@ def format_timedelta(timedelta: dt.timedelta) -> str:
     else:
         # Change this to format positive timedeltas the way you want
         # return str(dt.timedelta(days=timedelta.days, seconds=timedelta.seconds))
-        return str(timedelta)
+        # return str(timedelta)
+        return format_positive_timedelta(timedelta)
+
+
+def format_positive_timedelta(timedelta: dt.timedelta) -> str:
+    """
+    Format the timedelta like this:
+    days = int(leftover_time / (3600 * 24))
+    leftover_time -= days * (3600 * 24)
+
+    hours = int(leftover_time / 3600)
+    leftover_time -= hours * 3600
+
+    minutes = int(leftover_time / 60)
+    leftover_time -= minutes * 60
+
+    seconds = int(leftover_time)
+    leftover_time -= seconds
+    return f'{days}D{hours}H{minutes}M{seconds}S'
+
+    """
+    leftover_time = timedelta.total_seconds()
+
+    fittings = [3600 * 24, 3600, 60, 1]  # days, hours, minutes, seconds
+    results = [0] * 4
+
+    for i in range(4):
+        results[i] = int(leftover_time / fittings[i])
+        leftover_time -= results[i] * fittings[i]
+
+    return f'{results[0]}D{results[1]}H{results[2]}M{results[3]}S'
+
+    # leaving the below code to show what the above does:
 
 
 def format_datetime(datetime: dt.datetime) -> str:
-    # if datetime.tzinfo is None or datetime.tzinfo != dt.timezone.utc:
-    # raise ValueError('datetime is not UTC!')
     if datetime.tzinfo is None:
         tz = ''
     else:
@@ -154,7 +193,9 @@ def format_datetime(datetime: dt.datetime) -> str:
         tz = f'{prefix}{format_timedelta(utcoffset)}'  # type:ignore
 
     timetuple = datetime.timetuple()
-    day_of_the_week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][timetuple[6]]
-    month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][timetuple[1] - 1]
 
-    return f'{day_of_the_week}, {str(timetuple[2]).zfill(2)} {month} {timetuple[0]}, {timetuple[3]}:{timetuple[4]}:{timetuple[5]}.{round(datetime.microsecond/10000)}{tz}'
+    day_of_the_week_name = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][timetuple[6]]
+    month_name = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][timetuple[1] - 1]
+    processed_time_nums = list(map(lambda x: str(x).zfill(2), timetuple))
+
+    return f'{day_of_the_week_name}, {processed_time_nums[2]} {month_name} {processed_time_nums[0]}, {processed_time_nums[3]}:{processed_time_nums[4]}:{processed_time_nums[5]}.{str(int(datetime.microsecond/10000)).zfill(2)}{tz}'
