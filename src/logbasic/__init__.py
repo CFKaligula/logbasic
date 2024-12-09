@@ -20,31 +20,31 @@ def in_debugging() -> bool:
 ####################
 
 
-def debug(*args: list) -> None:
+def debug(*args: object) -> None:
     if in_debugging():
         format_and_print(ColorCode.grey, LogTypeText.debug, *args)
 
 
-def info(*args: list) -> None:
+def info(*args: object) -> None:
     format_and_print(ColorCode.reset, LogTypeText.info, *args)
 
 
-def warning(*args: list) -> None:
+def warning(*args: object) -> None:
     format_and_print(ColorCode.yellow, LogTypeText.warning, *args)
 
 
-def error(*args: list) -> None:
+def error(*args: object) -> None:
     format_and_print(ColorCode.bold_red, LogTypeText.error, *args)
 
 
-def success(*args: list) -> None:
+def success(*args: object) -> None:
     """
     When some process has succesfully finished. E.g. "Finished uploading to the database!"
     """
     format_and_print(ColorCode.green, LogTypeText.success, *args)
 
 
-def special(*args: list) -> None:
+def special(*args: object) -> None:
     """
     When you want to be able to see this line of code especially well. Useful for debugging when there are already lots of print statements.
     """
@@ -56,39 +56,39 @@ def special(*args: list) -> None:
 #####################################
 
 
-def debug_string(*args: list) -> None:
+def debug_string(*args: object) -> None:
     if in_debugging():
         format(ColorCode.grey, LogTypeText.debug, *args)
 
 
-def info_string(*args: list) -> None:
+def info_string(*args: object) -> None:
     format(ColorCode.reset, LogTypeText.info, *args)
 
 
-def warning_string(*args: list) -> None:
+def warning_string(*args: object) -> None:
     format(ColorCode.yellow, LogTypeText.warning, *args)
 
 
-def error_string(*args: list) -> None:
+def error_string(*args: object) -> None:
     format(ColorCode.bold_red, LogTypeText.error, *args)
 
 
-def special_string(*args: list) -> None:
+def special_string(*args: object) -> None:
     format(ColorCode.purple_marked, LogTypeText.special, *args)
 
 
-def success_string(*args: list) -> None:
+def success_string(*args: object) -> None:
     format(ColorCode.green, LogTypeText.success, *args)
 
 
 # Helper Functions
 
 
-def format_and_print(color: ColorCode, log_type_text: LogTypeText, *args: list):
+def format_and_print(color: ColorCode, log_type_text: LogTypeText, *args: object):
     print(format(color, log_type_text, *args))
 
 
-def format(color: ColorCode, log_type_text: LogTypeText, *args: list):
+def format(color: ColorCode, log_type_text: LogTypeText, *args: object):
     args_string = convert_args_to_str(*args)
     # time = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]  # only want milliseconds so remove 3 last nums form nanoseconds
     time = format_datetime(dt.datetime.now())
@@ -109,7 +109,7 @@ def format(color: ColorCode, log_type_text: LogTypeText, *args: list):
     return formatted_string
 
 
-def convert_args_to_str(*args: list) -> str:
+def convert_args_to_str(*args: object) -> str:
     result: str = ''
     for i in range(0, len(args)):
         arg = args[i]
