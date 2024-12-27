@@ -3,12 +3,12 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
+dynamic = ["dependencies"]
 name = "logbasic"
 version = "0.0.8"
-dependencies = [
-
-  # 'importlib-metadata; python_version<"3.10"',
-]
+# dependencies = [
+#   'postgreasy>1.1.0',
+# ]
 authors = [{ name = "Casper Kole", email = "casper@voltgoed.nl" }]
 description = "A simple package for logging."
 readme = "README.md"
@@ -19,6 +19,11 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 
+
 [project.urls]
 Homepage = "https://github.com/casper-voltgoed/logbasic"
 Issues = "https://github.com/casper-voltgoed/logbasic/issues"
+
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
