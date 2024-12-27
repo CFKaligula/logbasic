@@ -3,3 +3,4 @@ dist/
 *.pyc
 logs/
 
+src/logbasic.egg-info/
