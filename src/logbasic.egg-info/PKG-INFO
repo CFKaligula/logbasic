@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
-Name: pydbt
-Version: 0.0.1
+Name: logbasic
+Version: 0.0.7
 Summary: A simple package for logging.
 Author-email: Casper Kole <casper@voltgoed.nl>
 Project-URL: Homepage, <https://github.com/casper-voltgoed/logbasic>
