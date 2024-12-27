@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 dynamic = ["dependencies"]
-name = "logbasic"
-version = "0.0.8"
+name = "pydbt"
+version = "0.0.1"
 # dependencies = [
 #   'postgreasy>1.1.0',
 # ]

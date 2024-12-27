@@ -1,10 +1,10 @@
 Metadata-Version: 2.1
-Name: logbasic
-Version: 0.0.8
+Name: pydbt
+Version: 0.0.1
 Summary: A simple package for logging.
 Author-email: Casper Kole <casper@voltgoed.nl>
-Project-URL: Homepage, https://github.com/casper-voltgoed/logbasic
-Project-URL: Issues, https://github.com/casper-voltgoed/logbasic/issues
+Project-URL: Homepage, <https://github.com/casper-voltgoed/logbasic>
+Project-URL: Issues, <https://github.com/casper-voltgoed/logbasic/issues>
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
